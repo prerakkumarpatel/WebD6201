@@ -2,7 +2,7 @@
 * Prerakkumar Patel
 * 100846056
 * WebD6201
-* */
+* * */
 "use strict";
 (function () {
     function DisplayHomePage() {
@@ -26,7 +26,21 @@
         console.log("Display About page called");
         CreateAboutUsPage();
     }
+    function LoginFormValidation(){
+        ValidateField("#contactName",/^[a-zA-Z0-9]{2,10}$/,"Please enter valid alphanumeric username");
 
+    }
+    function RegisterFormValidation(){
+        ValidateField("#firstName",/^[a-zA-Z]{2,30}$/,"Please enter valid first name");
+        ValidateField("#lastName",/^[a-zA-Z]{2,30}$/,"Please enter valid  last name");
+        ValidateField("#emailAddress",/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,10}$/,"Please enter valid email address");
+
+    }
+    function ContactFormValidation(){
+        ValidateField("#fullName",/^([A-Z][a-z]{1,3}\.?\s)?([A-Z][a-z]+)+([\s,-]([A-z][a-z]+))*$/,"Please enter valid first and last name   ");
+        ValidateField("#contactNumber",/^(\+\d{1,3}[\s-.])?\(?\d{3}\)?[\s-.]?\d{3}[\s-.]\d{4}$/,"Please enter valid contact number ");
+        ValidateField("#emailAddress",/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,10}$/,"Please enter valid email address");
+    }
     function DisplayContactPage() {
         console.log("Display Contact page called");
 
@@ -40,9 +54,10 @@
             }
 
         });
+        ContactFormValidation();
     }
-    function AddContact(fullName,contactNumber,emailAddress){
 
+    function AddContact(fullName,contactNumber,emailAddress){
         let contact = new core.Contact(fullName, contactNumber, emailAddress);
         if (contact.serialize()) {
             let key = contact.FullName.substring(0,1) + Date.now();
@@ -104,10 +119,19 @@
 
         });
 
+    }
 
-
-
-
+    function ValidateField(input_field_id,regular_expression,error_message){
+     let messageArea = $("#messageArea").hide();
+     $(input_field_id).on("blur",function (){
+         let inputFieldText = $(this).val();
+         if(!regular_expression.test(inputFieldText)){
+             $(this).trigger("focus").trigger("select");
+             messageArea.addClass("alert alert-danger").text(error_message).show();
+         }else {
+             messageArea.removeAttr("class").hide();
+         }
+     });
     }
     function CreateAboutUsPage() {
         let container = document.createElement("div");
@@ -245,7 +269,7 @@
 
     function DisplayEditPage(){
         console.log("Edit Contact Page ");
-
+        ContactFormValidation();
 
         let page = location.hash.substring(1);
         switch (page){
@@ -285,6 +309,17 @@
         }
 
     }
+
+    function  DisplayLoginPage()
+    {
+        console.log("DisplayLoginPageCalled");
+        LoginFormValidation();
+    }
+    function  DisplayRegisterPage()
+    {
+        console.log("DisplayRegisterPageCalled");
+        RegisterFormValidation();
+    }
     function Start() {
 
         console.log("app started");
@@ -310,6 +345,15 @@
                  break;
             case "Edit Contact":
                 DisplayEditPage();
+            case "Register":
+                DisplayRegisterPage();
+                break;
+            case "Login":
+                DisplayLoginPage();
+                break;
+            default :{
+                console.log("Not registered");
+            }
         }
 
 
