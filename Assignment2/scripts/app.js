@@ -31,9 +31,11 @@
 
     }
     function RegisterFormValidation(){
-        ValidateField("#firstName",/^[a-zA-Z]{2,30}$/,"Please enter valid first name");
-        ValidateField("#lastName",/^[a-zA-Z]{2,30}$/,"Please enter valid  last name");
-        ValidateField("#emailAddress",/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,10}$/,"Please enter valid email address");
+
+
+        ValidateField("#firstName",/^[a-zA-Z]{2,}$/,"Please enter valid first name more than 1 letter");
+        ValidateField("#lastName",/^[a-zA-Z]{2,}$/,"Please enter valid  last name more than 1 letter");
+        ValidateField("#emailAddress",/^([a-zA-Z0-9._-]{3,20})+(@[a-zA-Z0-9._-]{2,20})+\.[a-zA-Z]{3,20}$/,"Please enter valid email address");
 
     }
     function ContactFormValidation(){
@@ -96,7 +98,6 @@
                         </button>           
                     </td>
                   
-                    <td></td>
                 </tr>`;
                 index++;
             }
@@ -132,7 +133,37 @@
              messageArea.removeAttr("class").hide();
          }
      });
+        $("#password,#confirmPassword").on("blur",function () {
+            console.log("onblur call");
+            if (($("#password").val().length < 0) || ($("#confirmPassword").val().length < 0))
+            {
+                messageArea.removeAttr("class").hide();
+            }
+             else
+            {if (($("#password").val().length < 6) || ($("#confirmPassword").val().length < 6)) {
+                messageArea.addClass("alert alert-danger").text("password must be greter then 6 letter").show();
+
+            } else if ($("#password").val() != $("#confirmPassword").val()) {
+                messageArea.addClass("alert alert-danger").text("password must be same ").show();
+                // $("#password").val("");
+                // $("#confirmPassword").val("");
+            } else {
+                messageArea.removeAttr("class").hide();
+            }}
+        });
     }
+    function DisplayLoginButton(){
+        console.log("Login button called");
+
+        let linkItem = $("<li>").addClass("nav-item");
+
+        //
+        let a = $("<a>").addClass("nav-link").attr("href","./login.html").html( `<i class="fa-solid fa-address-card"></i>Login`);
+
+        $("ul li:last-child").before(linkItem.add(a));
+        console.log(linkItem.add(a));
+    }
+
     function CreateAboutUsPage() {
         let container = document.createElement("div");
         container.classList.add("container", "justify-content-center", "ms-auto");
@@ -267,6 +298,26 @@
         document.body.appendChild(container);
     }
 
+    function ChangeNavbarLinkText() {
+        // Get the link element by its class name
+
+        console.log("display Navbar link change called");
+        // Get the link element by its class name
+        let link = document.getElementsByClassName("nav-link")[1];
+        // Change the text of the link
+        link.innerHTML = '<i class="fa-brands fa-product-hunt"></i> Project';
+        let nav = document.querySelector("ul");
+        let linkItem = document.createElement("li");
+        linkItem.setAttribute("class","nav-item");
+        let a = document.createElement("a");
+        a.setAttribute("class","nav-link");
+
+        a.innerHTML=`<i class="fa-solid fa-address-card"></i> HRM`;
+        linkItem.appendChild(a);
+        nav.insertBefore(linkItem,nav.lastElementChild);
+
+
+    }
     function DisplayEditPage(){
         console.log("Edit Contact Page ");
         ContactFormValidation();
@@ -309,14 +360,33 @@
         }
 
     }
+
     function  DisplayLoginPage()
     {
         console.log("DisplayLoginPageCalled");
         LoginFormValidation();
+        $("#submitButton").on("click",(event)=>{
+            event.preventDefault();
+            let linkItem = $("<li>").addClass("nav-item");
+
+            //
+            let a = $("<a>").addClass("nav-link").text($("#contactName").val());
+
+            $("ul li:last-child").before(linkItem.add(a));
+            console.log(linkItem.add(a));
+
+        });
+
     }
     function  DisplayRegisterPage()
     {
         console.log("DisplayRegisterPageCalled");
+        $("#submitButton").on("click",(event)=>{
+            event.preventDefault();
+
+
+
+        });
         RegisterFormValidation();
     }
     function Start() {
@@ -359,4 +429,8 @@
 
     }
     window.addEventListener("load", Start);
+    window.addEventListener("load", ChangeNavbarLinkText);
+    window.addEventListener("load", DisplayLoginButton);
+    window.addEventListener("load", DisplaynavbarBottom);
+
 })()
