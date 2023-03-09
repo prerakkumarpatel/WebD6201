@@ -9,16 +9,7 @@
         $("#AboutUsBtn").on("click", () => location.href = "about.html");
         $("body").append(`<article class="container"><p id="ArticleParagraph" class="mt-3">This is Article paragraph</p> </article>`)
         $("main").append(`<p class="mt-3" id="MainParagraph">This is jquery generated paragraph</p> `);
-        // let XHR =  new XMLHttpRequest();
-        // XHR.addEventListener(("readystatechange"),()=>{
-        //     if(XHR.readyState === 4 && XHR.status ===200)
-        //     {
-        //         $("header").html(XHR.responseText);
-        //         $(`li>a:contains(${document.title})`).addClass("active");
-        //     }
-        // });
-        // XHR.open("GET","header.html");
-        // XHR.send();
+
     }
 
     function AjaxRequest(method,url,callback){
@@ -60,26 +51,29 @@
 
         let ServicesDiv = document.createElement("div");
         ServicesDiv.id = "Service";
-        ServicesDiv.classList.add("justify-content-center", "d-flex");
+        ServicesDiv.classList.add("justify-content-center","d-flex","flex-column");
 
         let Services = [
             {
                 description: "We provide you a unique website design that is ideal for your personal or company website.",
-                image: "./images/services_web_design.jpg"
+                image: "./images/services_web_design.jpg",
+                id:"1"
             },
             {
                 description: "we provide end-to-end organization, conceptualization, design, optimization, and maintenance of your mobile app project.",
-                image: "./images/services_app_development.png"
+                image: "./images/services_app_development.png",
+                id:"2"
             },
             {
                 description: "We are capable of handling the design, creation, and release of a video game.",
-                image: "./images/services_game_development.jpeg"
+                image: "./images/services_game_development.jpeg",
+                id:"3"
             }
         ];
 
         Services.forEach(function(service){
             let ServiceDiv = document.createElement("div");
-            ServiceDiv.classList.add("m-3", "d-block", "text-center");
+            ServiceDiv.classList.add("m-3", "d-block", "text-center",service.id);
 
             let serviceInfo = document.createElement("p");
             serviceInfo.classList.add("text-lg-center");
@@ -224,7 +218,7 @@
 
     function CreateAboutUsPage() {
         let container = document.createElement("div");
-        container.classList.add("container", "justify-content-center", "ms-auto");
+        container.classList.add("container", "justify-content-center","align-item-center", "ms-auto");
 
         let h1 = document.createElement("h1");
         h1.textContent = "About Us";
@@ -237,32 +231,35 @@
 
         let teamDiv = document.createElement("div");
         teamDiv.id = "team";
-        teamDiv.classList.add("justify-content-center", "d-flex");
+        teamDiv.classList.add("justify-content-center","d-block","text-center");
 
         let teamMembers = [
             {
                 name: "Sanya Singhal",
                 email: "sanya.singhal@dcmail.ca",
                 phone: "437-286-1739",
-                image: "./dp/dp_sanya.jpeg"
+                image: "./dp/dp_sanya.jpeg",
+                id:"1"
             },
             {
                 name: "Prerakkumar Patel",
                 email: "prerakkumar.patel@dcmail.ca",
                 phone: "905-922-8135",
-                image: "./dp/dp_prerak.jpeg"
+                image: "./dp/dp_prerak.jpeg",
+                id:"2"
             },
             {
                 name: "Zeel Sutariya",
                 email: "zeel.sutariya@dcmail.ca",
                 phone: "905-922-8577",
-                image: "./dp/dp_zeel.jpeg"
+                image: "./dp/dp_zeel.jpeg",
+                id:"3"
             }
         ];
 
         teamMembers.forEach(function(member) {
             let memberDiv = document.createElement("div");
-            memberDiv.classList.add("m-3", "d-inline-block");
+            memberDiv.classList.add("m-3", member.id,"d-inline-block");
 
             let memberImg = document.createElement("img");
             memberImg.src = member.image;
@@ -296,7 +293,7 @@
     }
     function CreateProjectPage() {
         let container = document.createElement("div");
-        container.classList.add("container", "justify-content-center", "ms-auto");
+        container.classList.add("container", "justify-content-center","align-item-center", "ms-auto");
 
         let h1 = document.createElement("h1");
         h1.textContent = "Project";
@@ -309,22 +306,22 @@
         //
         let projectDiv = document.createElement("div");
         projectDiv.id = "project";
-        projectDiv.classList.add("justify-content-center", "d-flex");
+        projectDiv.classList.add("justify-content-center", "d-block");
 
         let projects = [
-            {
+            {   id:"1",
                 name: "ASP Payrolletor",
                 email: "sanya.singhal@dcmail.ca",
                 phone: "437-286-1739",
                 image: "./projectsphoto/paycalculator.jpeg"
             },
-            {
+            {   id:"2",
                 name: "Prerakkumar Patel",
                 email: "prerakkumar.patel@dcmail.ca",
                 phone: "905-922-8135",
                 image: "./projectsphoto/pizzashop.jpeg"
             },
-            {
+            {   id:"3",
                 name: "Zeel Sutariya",
                 email: "zeel.sutariya@dcmail.ca",
                 phone: "905-922-8577",
@@ -334,7 +331,7 @@
 
         projects.forEach(function(project) {
             let projectDetailsDiv = document.createElement("div");
-            projectDetailsDiv.classList.add("m-3", "d-inline-block");
+            projectDetailsDiv.classList.add("m-3",project.id ,"text-center","d-inline-block");
 
             let projectImg = document.createElement("img");
             projectImg.src = project.image;

@@ -5,37 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94a5c818-3e88-4629-91a3-f31df4e785f0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/data/user.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/header.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/User.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/authguard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/.idea/week5.2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/about.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/contact-list.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/contact.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/content/app.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/dp/dp_prerak.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/dp/dp_sanya.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/dp/dp_zeel.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/edit.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/products.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/projectsphoto/paycalculator.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/projectsphoto/pizzashop.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/projectsphoto/salescompany.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/register.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/scripts/app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/scripts/contact.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/scripts/namespace.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/services.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Assignment2/yarn.lock" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ICE3 (2).zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +58,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/prera/OneDrive/Last and We done (Durham Semester 4)/WebDev Client Side/WebstormProjects/WebD6201/ICE3",
+    "last_opened_file_path": "C:/Users/prera/OneDrive/Last and We done (Durham Semester 4)/WebDev Client Side/WebstormProjects/prerakkumarpatel.github.io",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -110,6 +84,7 @@
       <workItem from="1676012788739" duration="94000" />
       <workItem from="1676058728653" duration="2036000" />
       <workItem from="1676669222931" duration="16976000" />
+      <workItem from="1677259063800" duration="145000" />
     </task>
     <servers />
   </component>
@@ -208,19 +183,16 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/scripts/app.js</url>
           <line>108</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/scripts/app.js</url>
           <line>451</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/scripts/app.js</url>
           <line>464</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
