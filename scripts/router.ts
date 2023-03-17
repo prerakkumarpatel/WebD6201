@@ -3,9 +3,17 @@ namespace core {
     export class Router {
         private m_activeLink: string;
         private m_routingTable: string[];
+        private  m_linkData : string ;
         constructor() {
             this.m_activeLink = "";
             this.m_routingTable=[];
+            this.m_linkData ="";
+        }
+        public get LinkData():string {
+            return this.m_linkData;
+        }
+        public set LinkData(linkdata:string) {
+            this.m_linkData = linkdata;
         }
 
         /**
