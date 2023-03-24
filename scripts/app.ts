@@ -16,21 +16,101 @@
 
         }
 
+        function LoadLink(link: string, data: string = ""): void
+        {
+            router.ActiveLink = link;
+            console.log("load link called for"+router.ActiveLink);
+            AuthGuard();
 
-        // Loading header for ajax
-        function LoadHeader(){
-            $.get("./views/components/header.html",function (html_data){
+            router.LinkData = data;
+            history.pushState({}, "", router.ActiveLink);
 
-                $("header").html(html_data);
-                $(`li>a:contains(${document.title})`).addClass("active");
+            // capitalize active link and set document title to it
+            document.title = router.ActiveLink.substring(0, 1).toUpperCase() + router.ActiveLink.substring(1);
 
-                CheckLogin();
-
-                console.log("load header called");
-                AddNavigationEvents();
+            // remove all active Nav Links
+            $("ul>li>a").each(function()
+            {
+                $(this).removeClass("active");
             });
 
+            $(`li>a:contains(${document.title})`).addClass("active"); // updates the Active link on Navigation items
+
+            CheckLogin();
+
+            LoadContent();
         }
+
+        function AddNavigationEvents(): void
+        {
+
+            let NavLinks = $("ul>li>a"); // find all Navigation Links
+
+            NavLinks.off("click");
+            NavLinks.off("mouseover");
+
+            // loop through each Navigation link and load appropriate content on click
+            NavLinks.on("click", function()
+            {
+                LoadLink($(this).attr("data") as string);
+            });
+
+            NavLinks.on("mouseover", function()
+            {
+                $(this).css("cursor", "pointer");
+            });
+        }
+
+        function AddLinkEvents(link: string): void
+        {
+            let linkQuery = $(`a.link[data=${link}]`);
+            // remove all link events
+            linkQuery.off("click");
+            linkQuery.off("mouseover");
+            linkQuery.off("mouseout");
+
+            // css adjustments for links
+            linkQuery.css("text-decoration", "underline");
+            linkQuery.css("color", "blue");
+
+            // add link events
+            linkQuery.on("click", function()
+            {
+                LoadLink(`${link}`);
+            });
+
+            linkQuery.on("mouseover", function()
+            {
+                $(this).css('cursor', 'pointer');
+                $(this).css('font-weight', 'bold');
+            });
+
+            linkQuery.on("mouseout", function()
+            {
+                $(this).css('font-weight', 'normal');
+            });
+        }
+
+        /**
+         * This function loads the header.html content into a page
+         *
+         * @returns {void}
+         */
+        function LoadHeader(): void
+        {
+            // use AJAX to load the header content
+            $.get("./Views/components/header.html", function(html_data)
+            {
+                // inject Header content into the page
+                $("header").html(html_data);
+
+                AddNavigationEvents();
+
+                CheckLogin();
+            });
+        }
+
+
 
         // Displaying product page
         function DisplayProjectPage() :void{
@@ -69,7 +149,8 @@
         // Dispalying contact page
         function DisplayContactPage():void {
             console.log("Display Contact page called");
-
+            $("#contactList").on("click", () => LoadLink("contact-list")
+            );
             let sendButton = document.getElementById("sendButton") as HTMLElement ;
             let subscribeCheckbox = document.getElementById("subscribeCheckbox") as HTMLInputElement;
             sendButton.addEventListener("click",  ()=> {
@@ -195,7 +276,9 @@
         function DisplayEditPage():void{
             console.log("Edit Contact Page ");
             ContactFormValidation();
-
+            $("#addButton").on("click",()=>{
+                LoadLink("edit","add");
+            });
             let page = location.hash.substring(1);
             switch (page){
                 case "add":
@@ -246,71 +329,7 @@
                     console.log("auth guard working");
                 }}
         }
-        function LoadLink(link:string , data:string=""):void{
-           console.log("load link called");
-           router.ActiveLink = link;
-           AuthGuard();
-           router.LinkData = data;
-           history.pushState({},router.ActiveLink);
-           document.title = router.ActiveLink;
-           $("ui>li>a").each(function(){
-               $(this).removeClass("active");
-           });
-                $(`li>a:contains(${document.title})`).addClass("active");
 
-
-       LoadContent();
-        }
-        function AddNavigationEvents(){
-           console.log("add navigation events added");
-           let navLinks =  $("ul>li>a");
-           navLinks.off("click");
-            navLinks.off("mouseover");
-            navLinks.on("click" ,function(){
-
-                LoadLink($(this).attr("data") as string);
-
-
-            });
-            navLinks.on("mouseover" ,function(){
-
-                $(this).css("text-decoration" ,"underline");
-                $(this).css("cursor" ,"pointer");
-                $(this).css("color","blue");
-            });
-            navLinks.on("mouseout" ,function(){
-
-                $(this).css("text-decoration" ,"none");
-
-            });
-        }
-        function AddLinkEvents(link:string):void
-        {
-            let linkQuery = $(`a.link[data=${link}]`);
-            linkQuery.off("click");
-            linkQuery.off("mouseover");
-
-            linkQuery.off("mouseout");
-            linkQuery.css("text-decoration","underline");
-            linkQuery.css("color","blue");
-            linkQuery.on("click",function(){
-                LoadLink(`${link}`);
-            });
-
-            linkQuery.on("mouseover",function(){
-                LoadLink(`${link}`);
-
-                $(this).css("cursor" ,"pointer");
-                linkQuery.css("font-weight","bold");
-
-            });
-            linkQuery.on("mouseout",function(){
-                LoadLink(`${link}`);
-
-                linkQuery.css("font-weight","normal");
-
-            });
-        }   // displaying login page
         function  DisplayLoginPage()
         {
             console.log("DisplayLoginPageCalled");
@@ -339,6 +358,12 @@
                        messageArea.removeAttr("class").hide();
 
                               LoadLink("contact-list");
+                       let user: string | null = sessionStorage.getItem("user")?.split(" ")[0] ?? null;
+                       let linkItem = $("<li>").addClass("nav-item");
+                       console.log(user);
+                       let a = $("<a>").addClass("nav-link border border-danger border-2 rounded ").text(user as string);
+
+                       $("ul li:last-child").before(linkItem.add(a));
 
 
                    }else {
@@ -363,13 +388,7 @@
 
                 $("#login").html(`<a id="logout" class="nav-link" href="#"><i class="fas fa-sign-out-alt "></i>Logout</a>`)
 
-                let linkItem = $("<li>").addClass("nav-item");
-                let user: string | null = sessionStorage.getItem("user")?.split(" ")[0] ?? null;
 
-                console.log(user);
-                let a = $("<a>").addClass("nav-link border border-danger border-2 rounded ").text(user as string);
-
-                $("ul li:last-child").before(linkItem.add(a));
 
             }
             $("#logout").on("click",function () {
@@ -385,6 +404,8 @@
         {
             // displaying function name in console
             console.log("DisplayRegisterPageCalled");
+            $("#").on("click", () => LoadLink("about")
+            );
             // submit button clicked
             $("#submitButton").on("click",(event)=>{
                 event.preventDefault();
