@@ -80,16 +80,16 @@
         $("#contactList").on("click", () => LoadLink("contact-list"));
         let sendButton = document.getElementById("sendButton");
         let subscribeCheckbox = document.getElementById("subscribeCheckbox");
-        sendButton.addEventListener("click", () => {
+        sendButton.addEventListener("click", (e) => {
+            console.log("send button on contact page clicked");
+            e.preventDefault();
             if (subscribeCheckbox.checked) {
                 let fullName = document.forms[0].fullName.value;
                 let contactNumber = document.forms[0].contactNumber.value;
                 let emailAddress = document.forms[0].emailAddress.value;
                 AddContact(fullName, contactNumber, emailAddress);
-                LoadLink("contact-list");
             }
         });
-        ContactFormValidation();
     }
     function AddContact(fullName, contactNumber, emailAddress) {
         let contact = new core.Contact(fullName, contactNumber, emailAddress);
