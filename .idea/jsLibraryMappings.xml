@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <excludedPredefinedLibrary name="WebD6201/ICE1/node_modules" />
-    <excludedPredefinedLibrary name="WebD6201/ICE3/node_modules" />
     <excludedPredefinedLibrary name="WebD6201/week4ice2/node_modules" />
-    <excludedPredefinedLibrary name="WebD6201/week5.2/node_modules" />
-    <excludedPredefinedLibrary name="WebD6201/week7/node_modules" />
   </component>
 </project>

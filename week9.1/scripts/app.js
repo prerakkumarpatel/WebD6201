@@ -2,8 +2,8 @@
 (function () {
     function DisplayHomePage() {
         console.log("home page called");
-        $("#AboutUsBtn").on("click", () => location.href = "about");
-        $("body").append(`<article class="container"><p id="ArticleParagraph" class="mt-3">This is Article paragraph</p> </article>`);
+        $("#AboutUsBtn").on("click", () => LoadLink("about"));
+        $("main").append(`<article class="container"><p id="ArticleParagraph" class="mt-3">This is Article paragraph</p> </article>`);
         $("main").append(`<p class="mt-3" id="MainParagraph">This is jquery generated paragraph</p> `);
     }
     function LoadHeader() {
@@ -12,6 +12,7 @@
             $(`li>a:contains(${document.title})`).addClass("active");
             CheckLogin();
             console.log("load header called");
+            AddNavigationEvents();
         });
     }
     function DisplayProjectPage() {
@@ -43,7 +44,7 @@
                 let contactNumber = document.forms[0].contactNumber.value;
                 let emailAddress = document.forms[0].emailAddress.value;
                 AddContact(fullName, contactNumber, emailAddress);
-                location.href = "contact-list";
+                LoadLink("contact-list");
             }
         });
         ContactFormValidation();
@@ -67,23 +68,23 @@
                 let contact = new core.Contact();
                 contact.deserialize(contactData);
                 data += `
-                <tr>
-                    <th scope="row" class="text-center">${index}</th>
-                    <td>${contact.FullName}</td>
-                    <td>${contact.ContactNumber}</td>
-                    <td>${contact.EmailAddress}</td>
-                    <td class="text-center">
-                        <button value="${key}" class="btn btn-primary btn-sm edit">                          
-                            <i class="fas fa-edit fa-sm"> Edit</i>
-                        </button>           
-                    </td>
-                    <td class="text-center">
-                        <button value="${key}" class="btn btn-danger btn-sm delete">                          
-                            <i class="fas fa-trash-alt fa-sm"> Delete</i>
-                        </button>           
-                    </td>
-                  
-                </tr>`;
+                    <tr>
+                        <th scope="row" class="text-center">${index}</th>
+                        <td>${contact.FullName}</td>
+                        <td>${contact.ContactNumber}</td>
+                        <td>${contact.EmailAddress}</td>
+                        <td class="text-center">
+                            <button value="${key}" class="btn btn-primary btn-sm edit">                          
+                                <i class="fas fa-edit fa-sm"> Edit</i>
+                            </button>           
+                        </td>
+                        <td class="text-center">
+                            <button value="${key}" class="btn btn-danger btn-sm delete">                          
+                                <i class="fas fa-trash-alt fa-sm"> Delete</i>
+                            </button>           
+                        </td>
+                      
+                    </tr>`;
                 index++;
             }
             contactList.innerHTML = data;
@@ -92,10 +93,10 @@
             if (confirm("Delete contact ,are you sure?")) {
                 localStorage.removeItem($(this).val());
             }
-            location.href = "contact-list";
+            LoadLink("contact-list");
         });
         $("button.edit").on("click", function () {
-            location.href = "edit#" + $(this).val();
+            LoadLink("edit", $(this).val());
         });
         $("#addButton").on("click", (event) => {
             event.preventDefault();
@@ -155,10 +156,10 @@
                     let contactNumber = document.forms[0].contactNumber.value;
                     let emailAddress = document.forms[0].emailAddress.value;
                     AddContact(fullName, contactNumber, emailAddress);
-                    location.href = "contact-list";
+                    LoadLink("contact-list");
                 });
                 $("#cancelButton").on("click", () => {
-                    location.href = "contact-list";
+                    LoadLink("contact-list");
                 });
                 break;
             default:
@@ -178,11 +179,70 @@
                         location.href = "contact-list";
                     });
                     $("#cancelButton").on("click", () => {
-                        location.href = "contact-list";
+                        LoadLink("contact-list");
                     });
                 }
                 break;
         }
+    }
+    function AuthGuard() {
+        let protected_routes = ["contact-list"];
+        if (protected_routes.indexOf(router.ActiveLink) > -1) {
+            if (!sessionStorage.getItem("user")) {
+                router.ActiveLink = "login";
+                console.log("auth guard working");
+            }
+        }
+    }
+    function LoadLink(link, data = "") {
+        console.log("load link called");
+        router.ActiveLink = link;
+        AuthGuard();
+        router.LinkData = data;
+        history.pushState({}, router.ActiveLink);
+        document.title = router.ActiveLink;
+        $("ui>li>a").each(function () {
+            $(this).removeClass("active");
+        });
+        $(`li>a:contains(${document.title})`).addClass("active");
+        LoadContent();
+    }
+    function AddNavigationEvents() {
+        console.log("add navigation events added");
+        let navLinks = $("ul>li>a");
+        navLinks.off("click");
+        navLinks.off("mouseover");
+        navLinks.on("click", function () {
+            LoadLink($(this).attr("data"));
+        });
+        navLinks.on("mouseover", function () {
+            $(this).css("text-decoration", "underline");
+            $(this).css("cursor", "pointer");
+            $(this).css("color", "blue");
+        });
+        navLinks.on("mouseout", function () {
+            $(this).css("text-decoration", "none");
+        });
+    }
+    function AddLinkEvents(link) {
+        let linkQuery = $(`a.link[data=${link}]`);
+        linkQuery.off("click");
+        linkQuery.off("mouseover");
+        linkQuery.off("mouseout");
+        linkQuery.css("text-decoration", "underline");
+        linkQuery.css("color", "blue");
+        linkQuery.on("click", function () {
+            LoadLink(`${link}`);
+        });
+        linkQuery.on("mouseover", function () {
+            LoadLink(`${link}`);
+            $(this).css("cursor", "pointer");
+            linkQuery.css("font-weight", "bold");
+        });
+        linkQuery.on("mouseout", function () {
+            LoadLink(`${link}`);
+            linkQuery.css("font-weight", "normal");
+        });
     }
     function DisplayLoginPage() {
         console.log("DisplayLoginPageCalled");
@@ -204,7 +264,7 @@
                 if (success) {
                     sessionStorage.setItem("user", newUser.serialize());
                     messageArea.removeAttr("class").hide();
-                    location.href = "contact-list";
+                    LoadLink("contact-list");
                 }
                 else {
                     $("#username").trigger("focus").trigger("select");
@@ -268,11 +328,13 @@
         console.log("4o4 called");
     }
     function LoadContent() {
+        CheckLogin();
         let pageName = router.ActiveLink;
         let pageTitle = pageName.charAt(0).toUpperCase() + pageName.slice(1);
         let callback = ActiveLinkCallback();
         $.get(`./views/components/${pageName}.html`, function (html_data) {
             $("main").html(html_data);
+            CheckLogin();
             callback();
         });
         $("title").text(pageTitle);
@@ -287,8 +349,8 @@
     function Start() {
         console.log("app started");
         LoadHeader();
+        LoadLink("home");
         LoadFooter();
-        LoadContent();
     }
     window.addEventListener("load", Start);
 })();
