@@ -41,7 +41,7 @@ const passport_local_1 = __importDefault(require("passport-local"));
 const connect_flash_1 = __importDefault(require("connect-flash"));
 let localStrategy = passport_local_1.default.Strategy;
 const user_1 = __importDefault(require("../models/user"));
-mongoose_1.default.connect(DBConfig.LocalURI);
+mongoose_1.default.connect(DBConfig.RemoteURI);
 const db = mongoose_1.default.connection;
 db.on("error", function (err) {
     console.error("Connection Error");
