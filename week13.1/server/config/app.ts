@@ -15,7 +15,7 @@ let localStrategy = passportLocal.Strategy;  //alias
 
 import User from '../models/user';
 
-mongoose.connect(DBConfig.LocalURI);
+mongoose.connect(DBConfig.RemoteURI);
 const db = mongoose.connection;
 db.on("error",function(err){
   console.error("Connection Error");
