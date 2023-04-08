@@ -46,22 +46,15 @@
 
         // Validations for contact form
         function ContactFormValidation():void{
-            ValidateField("#fullName",/^([A-Z][a-z]{1,3}\.?\s)?([A-Z][a-z]+)+([\s,-]([A-z][a-z]+))*$/,"Please enter valid first and last name as ( first last )  ");
-            ValidateField("#contactNumber", /^(\+\d{1,3}[\s-.])?\(?\d{3}\)?[\s-.]?\d{3}[\s-.]\d{4}$/,"Please enter valid contact number as (xxx-xxx-xxxx) ");
+            ValidateField("#fullName",/^([A-Za-z]{1,3}\.?\s)?([A-Za-z]+)+([\s,-]([A-za-z]+))*$/,"Please enter valid  name as ( First Mid Last )  ");
+            ValidateField("#contactNumber", /^([0-9]{10})$/,"Please enter valid contact number of 10 digits ");
             ValidateField("#emailAddress",/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,10}$/,"Please enter valid email address");
         }
 
         // Dispalying contact page
         function DisplayContactPage():void {
             console.log("Display Contact page called");
-            $("a[data='contact-list']").off("click");
-            $("a[data='contact-list']").on("click", function()
-            {
-                location.href = "/contact-list";
-            });
 
-            $("#contactList").on("click", () => location.href = "/contact-list"
-            );
             let sendButton = document.getElementById("sendButton") as HTMLElement ;
             let subscribeCheckbox = document.getElementById("subscribeCheckbox") as HTMLInputElement;
             sendButton.addEventListener("click",  (e)=> {
@@ -72,10 +65,10 @@
                     let fullName = document.forms[0].fullName.value;
                     let contactNumber = document.forms[0].contactNumber.value;
                     let emailAddress = document.forms[0].emailAddress.value;
-                    AddContact(fullName,contactNumber,emailAddress);
-                    location.href = "/contact-list";
+                    $("#contactpage").submit();
 
                 }
+
 
             });
             ContactFormValidation();
@@ -183,7 +176,7 @@
 
                    if(success){
                        sessionStorage.setItem("user",newUser.serialize() as string);
-                       messageArea.removeAttr("class").hide();
+                       messageArea.removeAttr("class").hide();   
 
                        location.href = "/contact-list";
                        let user: string | null = sessionStorage.getItem("user")?.split(" ")[0] ?? null;

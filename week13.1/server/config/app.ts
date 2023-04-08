@@ -7,9 +7,15 @@ import mongoose from 'mongoose';
 import indexRouter from '../routes';
 import usersRouter from '../routes/users';
 import * as DBConfig from './db';
-// mongoose.connect(DBConfig.RemoteURI);
-mongoose.connect(DBConfig.LocalURI);
+import  session from 'express-session';
+import passport from 'passport';
+import passportLocal from 'passport-local';
+import flash from 'connect-flash'
+let localStrategy = passportLocal.Strategy;  //alias
 
+import User from '../models/user';
+
+mongoose.connect(DBConfig.LocalURI);
 const db = mongoose.connection;
 db.on("error",function(err){
   console.error("Connection Error");
@@ -30,8 +36,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, '../client')));
-app.use(express.static(path.join(__dirname, '../node_modules')));
+
+
+app.use(express.static(path.join(__dirname, '../../client')));
+app.use(express.static(path.join(__dirname, '../../node_modules')));
+app.use(session ({
+  secret : DBConfig.SessionSecret,
+  saveUninitialized: false,
+  resave: false
+}));
+
+
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
