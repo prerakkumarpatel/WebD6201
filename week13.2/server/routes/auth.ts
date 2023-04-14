@@ -1,9 +1,4 @@
-// login 2 route
-// 2 register
-// and logout
-
-// roter.get('/login',displayloginpage);
-// export default router;
+//import modules
 import express from 'express';
 import {
     DisplayLoginPage,

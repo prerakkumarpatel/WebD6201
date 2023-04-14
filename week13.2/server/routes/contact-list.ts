@@ -1,35 +1,41 @@
+// Import the Express module
 import express from 'express';
+
+// Create an instance of the Router class from the Express module
 const router = express.Router();
 
-import {AuthGuard} from "../util";
+// Import various controller functions from the ../controllers module
 import {
-    DisplayAddPage,
-    DisplayContactListPage,
-    DisplayUpdatePage,
-    ProcessAddPage, ProcessDeletePage,
-    ProcessUpdatePage
-} from "../controllers/contact-list";
+    DisplayAboutUsPage,
+    DisplayContactPage,
+    DisplayHomePage,
+    DisplayProjectPage,
+    DisplayServicesPage,
+    ProcessContactPage
+} from "../controllers";
 
-/* ****************************** CONTACT-LIST ROUTES *************************************** */
-router.get('/contact-list', AuthGuard, DisplayContactListPage);
+/* ****************************** TOP LEVEL ROUTES *************************************** */
 
-/* Display the Add Page */
-router.get('/add', AuthGuard, DisplayAddPage);
+// Define a route  DisplayHomePage function
+router.get('/', DisplayHomePage);
 
+// Define a route  DisplayHomePage function
+router.get('/home', DisplayHomePage);
 
-/* Process the Add Request */
-router.post('/add', AuthGuard, ProcessAddPage);
+// Define a route  DisplayAboutUsPage function
+router.get('/about', DisplayAboutUsPage);
 
-/* Process the delete request contact */
-router.get('/delete/:id', AuthGuard, ProcessDeletePage);
+// Define a route DisplayProjectPage function
+router.get('/projects', DisplayProjectPage);
 
+// Define a route  DisplayServicesPage function
+router.get('/services', DisplayServicesPage);
 
-/* Display edit Page with data */
-router.get('/edit/:id', AuthGuard, DisplayUpdatePage);
+// Define a route  DisplayContactPage function
+router.get('/contact', DisplayContactPage);
 
+// Define a route  ProcessContactPage function
+router.post('/contact', ProcessContactPage);
 
-/* Process the edit Request */
-router.post('/edit/:id', AuthGuard, ProcessUpdatePage);
-
-
+// Export the router object
 export default router;
